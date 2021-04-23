@@ -234,55 +234,6 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
         }
         return Promise.resolve(null);
     }
-    /**
-     * @param api_version (optional)
-     * @return Success
-     */
-    weatherForecast(api_version) {
-        let url_ = this.baseUrl + "/WeatherForecast?";
-        if (api_version === null)
-            throw new Error("The parameter 'api_version' cannot be null.");
-        else if (api_version !== undefined)
-            url_ += "api-version=" + encodeURIComponent("" + api_version) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            headers: {
-                "Accept": "text/plain"
-            }
-        };
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response) => {
-            return this.processWeatherForecast(_response);
-        });
-    }
-    processWeatherForecast(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(WeatherForecast.fromJS(item));
-                }
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
 }
 export class ServiceModel {
     constructor(data) {
@@ -393,38 +344,6 @@ export class JwtDetail {
         data = typeof data === 'object' ? data : {};
         data["jwt"] = this.jwt;
         data["expiryDatetimeUtc"] = this.expiryDatetimeUtc ? this.expiryDatetimeUtc.toISOString() : undefined;
-        return data;
-    }
-}
-export class WeatherForecast {
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    init(_data) {
-        if (_data) {
-            this.date = _data["date"] ? new Date(_data["date"].toString()) : undefined;
-            this.temperatureC = _data["temperatureC"];
-            this.temperatureF = _data["temperatureF"];
-            this.summary = _data["summary"];
-        }
-    }
-    static fromJS(data) {
-        data = typeof data === 'object' ? data : {};
-        let result = new WeatherForecast();
-        result.init(data);
-        return result;
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data["date"] = this.date ? this.date.toISOString() : undefined;
-        data["temperatureC"] = this.temperatureC;
-        data["temperatureF"] = this.temperatureF;
-        data["summary"] = this.summary;
         return data;
     }
 }
