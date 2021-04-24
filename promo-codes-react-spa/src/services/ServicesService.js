@@ -27,7 +27,9 @@ export default class ServicesService extends BaseService {
         let requestModel = new ActivateBonusRequestModel();
         requestModel.promoCode = promoCode;
         requestModel.serviceId = serviceId;
+
         let responseModel = new ServiceResponseModel(await this.client.activateBonus(this.clientDefaultVersion, requestModel));
+        
         return new ServiceModel(responseModel.id, responseModel.name);
     }
 };
