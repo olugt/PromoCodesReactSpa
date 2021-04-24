@@ -332,7 +332,7 @@ export class LoginRequestModel {
         return data;
     }
 }
-export class JwtDetailResponseModel {
+export class JwtDetail {
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -349,7 +349,7 @@ export class JwtDetailResponseModel {
     }
     static fromJS(data) {
         data = typeof data === 'object' ? data : {};
-        let result = new JwtDetailResponseModel();
+        let result = new JwtDetail();
         result.init(data);
         return result;
     }
@@ -357,6 +357,32 @@ export class JwtDetailResponseModel {
         data = typeof data === 'object' ? data : {};
         data["jwt"] = this.jwt;
         data["expiryDatetimeUtc"] = this.expiryDatetimeUtc ? this.expiryDatetimeUtc.toISOString() : undefined;
+        return data;
+    }
+}
+export class JwtDetailResponseModel {
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.jwtDetail = _data["jwtDetail"] ? JwtDetail.fromJS(_data["jwtDetail"]) : undefined;
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new JwtDetailResponseModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["jwtDetail"] = this.jwtDetail ? this.jwtDetail.toJSON() : undefined;
         return data;
     }
 }
