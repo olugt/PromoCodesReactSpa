@@ -67,7 +67,7 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(ServiceModel.fromJS(item));
+                        result200.push(ServiceResponseModel.fromJS(item));
                 }
                 return result200;
             });
@@ -127,7 +127,7 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(ServiceModel.fromJS(item));
+                        result200.push(ServiceResponseModel.fromJS(item));
                 }
                 return result200;
             });
@@ -178,7 +178,7 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
             return response.text().then((_responseText) => {
                 let result200 = null;
                 let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = ServiceModel.fromJS(resultData200);
+                result200 = ServiceResponseModel.fromJS(resultData200);
                 return result200;
             });
         }
@@ -191,11 +191,16 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
     }
     /**
      * Logs in a user with the email address and password provided.
+     * @param api_version (optional)
      * @param body (optional) User credentials.
      * @return Success
      */
-    login(body) {
-        let url_ = this.baseUrl + "/api/User/login";
+    login(api_version, body) {
+        let url_ = this.baseUrl + "/api/User/login?";
+        if (api_version === null)
+            throw new Error("The parameter 'api_version' cannot be null.");
+        else if (api_version !== undefined)
+            url_ += "api-version=" + encodeURIComponent("" + api_version) + "&";
         url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(body);
         let options_ = {
@@ -223,8 +228,16 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
             return response.text().then((_responseText) => {
                 let result200 = null;
                 let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = JwtDetail.fromJS(resultData200);
+                result200 = JwtDetailResponseModel.fromJS(resultData200);
                 return result200;
+            });
+        }
+        else if (status === 500) {
+            return response.text().then((_responseText) => {
+                let result500 = null;
+                let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result500 = ErrorResponseModel.fromJS(resultData500);
+                return throwException("Server Error", status, _responseText, _headers, result500);
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -235,7 +248,7 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
         return Promise.resolve(null);
     }
 }
-export class ServiceModel {
+export class ServiceResponseModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -252,7 +265,7 @@ export class ServiceModel {
     }
     static fromJS(data) {
         data = typeof data === 'object' ? data : {};
-        let result = new ServiceModel();
+        let result = new ServiceResponseModel();
         result.init(data);
         return result;
     }
@@ -263,7 +276,7 @@ export class ServiceModel {
         return data;
     }
 }
-export class ActivateBonusBinderModel {
+export class ActivateBonusRequestModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -280,7 +293,7 @@ export class ActivateBonusBinderModel {
     }
     static fromJS(data) {
         data = typeof data === 'object' ? data : {};
-        let result = new ActivateBonusBinderModel();
+        let result = new ActivateBonusRequestModel();
         result.init(data);
         return result;
     }
@@ -291,7 +304,7 @@ export class ActivateBonusBinderModel {
         return data;
     }
 }
-export class LoginBinderModel {
+export class LoginRequestModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -308,7 +321,7 @@ export class LoginBinderModel {
     }
     static fromJS(data) {
         data = typeof data === 'object' ? data : {};
-        let result = new LoginBinderModel();
+        let result = new LoginRequestModel();
         result.init(data);
         return result;
     }
@@ -319,7 +332,7 @@ export class LoginBinderModel {
         return data;
     }
 }
-export class JwtDetail {
+export class JwtDetailResponseModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -336,7 +349,7 @@ export class JwtDetail {
     }
     static fromJS(data) {
         data = typeof data === 'object' ? data : {};
-        let result = new JwtDetail();
+        let result = new JwtDetailResponseModel();
         result.init(data);
         return result;
     }
@@ -344,6 +357,46 @@ export class JwtDetail {
         data = typeof data === 'object' ? data : {};
         data["jwt"] = this.jwt;
         data["expiryDatetimeUtc"] = this.expiryDatetimeUtc ? this.expiryDatetimeUtc.toISOString() : undefined;
+        return data;
+    }
+}
+export class ErrorResponseModel {
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.message = _data["message"];
+            if (_data["data"]) {
+                this.data = {};
+                for (let key in _data["data"]) {
+                    if (_data["data"].hasOwnProperty(key))
+                        this.data[key] = _data["data"][key];
+                }
+            }
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new ErrorResponseModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["message"] = this.message;
+        if (this.data) {
+            data["data"] = {};
+            for (let key in this.data) {
+                if (this.data.hasOwnProperty(key))
+                    data["data"][key] = this.data[key];
+            }
+        }
         return data;
     }
 }

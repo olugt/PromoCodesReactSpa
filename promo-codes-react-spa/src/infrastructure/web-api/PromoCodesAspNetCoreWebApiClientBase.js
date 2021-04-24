@@ -1,17 +1,16 @@
-class PromoCodesAspNetCoreWebApiClientBase {
+export default class PromoCodesAspNetCoreWebApiClientBase {
     constructor() {
-        this.jwt = "";
+        this.token = undefined;
     }
+
     setToken(token) {
-        this.jwt = token;
+        this.token = token;
     }
-    ;
+    
     transformOptions(options) {
-        if (this.jwt) {
-            options.headers = options.headers["Authorization"] = `Bearer ${this.jwt}`;
+        if (this.token) {
+            options.headers = options.headers["Authorization"] = `Bearer ${this.token}`;
         }
         return Promise.resolve(options);
     }
-    ;
 }
-export default PromoCodesAspNetCoreWebApiClientBase;
