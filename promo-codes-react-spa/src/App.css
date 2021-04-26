@@ -1,7 +1,8 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +36,31 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+#header {
+  background-color: white;
+  height: 4em;
+  position: relative;
+}
+
+#main {
+  padding-top: 2em;
+}
+
+.visible {
+  display: initial;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.floating {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: inherit;
+  width: 30em;
+  background-color: red;
 }
