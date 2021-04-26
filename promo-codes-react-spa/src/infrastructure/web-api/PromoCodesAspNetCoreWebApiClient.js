@@ -236,8 +236,16 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
             return response.text().then((_responseText) => {
                 let result500 = null;
                 let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result500 = ErrorResponseModel.fromJS(resultData500);
+                result500 = ObjectErrorResponseModel.fromJS(resultData500);
                 return throwException("Server Error", status, _responseText, _headers, result500);
+            });
+        }
+        else if (status === 400) {
+            return response.text().then((_responseText) => {
+                let result400 = null;
+                let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = ValidationErrorResponseModel.fromJS(resultData400);
+                return throwException("Bad Request", status, _responseText, _headers, result400);
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -386,7 +394,7 @@ export class JwtDetailResponseModel {
         return data;
     }
 }
-export class ErrorResponseModel {
+export class ObjectErrorResponseModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -409,7 +417,47 @@ export class ErrorResponseModel {
     }
     static fromJS(data) {
         data = typeof data === 'object' ? data : {};
-        let result = new ErrorResponseModel();
+        let result = new ObjectErrorResponseModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["message"] = this.message;
+        if (this.data) {
+            data["data"] = {};
+            for (let key in this.data) {
+                if (this.data.hasOwnProperty(key))
+                    data["data"][key] = this.data[key];
+            }
+        }
+        return data;
+    }
+}
+export class ValidationErrorResponseModel {
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.message = _data["message"];
+            if (_data["data"]) {
+                this.data = {};
+                for (let key in _data["data"]) {
+                    if (_data["data"].hasOwnProperty(key))
+                        this.data[key] = _data["data"][key] !== undefined ? _data["data"][key] : [];
+                }
+            }
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new ValidationErrorResponseModel();
         result.init(data);
         return result;
     }
