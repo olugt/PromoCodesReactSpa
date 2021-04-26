@@ -1,5 +1,5 @@
-import ServiceModel from "../common/models/ServiceModel";
-import { ActivateBonusRequestModel, ServiceResponseModel } from "../infrastructure/web-api/PromoCodesAspNetCoreWebApiClient";
+import ServiceModel from "../../common/models/ServiceModel";
+import { ActivateBonusRequestModel, ServiceResponseModel } from "../../infrastructure/web-api/PromoCodesAspNetCoreWebApiClient";
 import BaseService from "./BaseService";
 
 export default class ServicesService extends BaseService {
@@ -7,29 +7,63 @@ export default class ServicesService extends BaseService {
         super(token);
     }
 
-    async getServices(page, limit) {
-        return Array.from(await this.client.services(page, limit, this.clientDefaultVersion),
-            a => {
-                let responseModel = new ServiceResponseModel(a);
-                return new ServiceModel(responseModel.id, responseModel.name);
-            });
+    /**
+     * Get services from promo codes web API.
+     * @param {Number} page Page number.
+     * @param {Number} limit Limit of number of items per page.
+     * @returns Services array.
+     */
+    async getServices(page = 0, limit = 0) {
+        try {
+            return Array.from(await this.client.services(page, limit, this.clientDefaultVersion),
+                a => {
+                    let responseModel = new ServiceResponseModel(a);
+                    return new ServiceModel(responseModel.id, responseModel.name);
+                });
+        }
+        catch (error) {
+            throw BaseService.TransformError(error);
+        }
     }
 
+    /**
+     * Get services from promo codes web API.
+     * @param {String} nameSnippet Snippet of service name.
+     * @param {Number} page Page number.
+     * @param {Number} limit Limit of number of items per page.
+     * @returns Services array.
+     */
     async searchServices(nameSnippet, page, limit) {
-        return Array.from(await this.client.search(nameSnippet, page, limit, this.clientDefaultVersion),
-            a => {
-                let responseModel = new ServiceResponseModel(a);
-                return new ServiceModel(responseModel.id, responseModel.name);
-            });
+        try {
+            return Array.from(await this.client.search(nameSnippet, page, limit, this.clientDefaultVersion),
+                a => {
+                    let responseModel = new ServiceResponseModel(a);
+                    return new ServiceModel(responseModel.id, responseModel.name);
+                });
+        }
+        catch (error) {
+            throw BaseService.TransformError(error);
+        }
     }
 
+    /**
+     * Activate bonus for user, with respect to service and promo code.
+     * @param {String} promoCode Promo code to be used to create and activate a bonus for the service for the user.
+     * @param {Number} serviceId ID of the service.
+     * @returns The service activated for the bonus for the user.
+     */
     async activateBonus(promoCode, serviceId) {
-        let requestModel = new ActivateBonusRequestModel();
-        requestModel.promoCode = promoCode;
-        requestModel.serviceId = serviceId;
+        try {
+            let requestModel = new ActivateBonusRequestModel();
+            requestModel.promoCode = promoCode;
+            requestModel.serviceId = serviceId;
 
-        let responseModel = new ServiceResponseModel(await this.client.activateBonus(this.clientDefaultVersion, requestModel));
-        
-        return new ServiceModel(responseModel.id, responseModel.name);
+            let responseModel = new ServiceResponseModel(await this.client.activateBonus(this.clientDefaultVersion, requestModel));
+
+            return new ServiceModel(responseModel.id, responseModel.name);
+        }
+        catch (error) {
+            throw BaseService.TransformError(error);
+        }
     }
 };
