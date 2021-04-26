@@ -7,6 +7,12 @@ export default class UserService extends BaseService {
         super();
     }
 
+    /**
+     * Process login for the user with the supplied credentials.
+     * @param {String} emailAddress User's email address.
+     * @param {String} password User's password.
+     * @returns Identity token detail.
+     */
     async processLogin(emailAddress, password) {
         try {
             let requestModel = new LoginRequestModel();
@@ -14,8 +20,8 @@ export default class UserService extends BaseService {
             requestModel.password = password;
 
             let responseModel = new JwtDetailResponseModel(await this.client.login(this.clientDefaultVersion, requestModel));
-
-            return new TokenDetailModel(responseModel.jwtDetail.jwt, responseModel.jwtDetail.expiryDatetimeUtc);
+            let tokenDetail = new TokenDetailModel(responseModel.jwtDetail.jwt, responseModel.jwtDetail.expiryDatetimeUtc);
+            return tokenDetail;
         }
         catch (error) {
             throw BaseService.TransformError(error);
