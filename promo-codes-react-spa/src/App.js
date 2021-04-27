@@ -3,7 +3,7 @@ import './App.css';
 import MainRouter from './routers/MainRouter';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createContext, useEffect, useState } from 'react';
-import TokenDetailModel from './common/models/TokenDetailModel';
+import TokenDetailModel from './common/models/contexts/TokenDetailModel';
 import ContextProviderValueModel from './common/models/ContextProviderValueModel';
 import NotificationModel from './common/models/NotificationModel';
 import Notification from './components/shared/Notification';
@@ -18,7 +18,7 @@ function App() {
   const [notificationState, setNotificationState] = useState(new NotificationModel());
   const [tokenState, setTokenState] = useState(new TokenDetailModel());
   const [configurationState, setConfigurationState] = useState(new ConfigurationModel());
-  let token = tokenState.token;
+  let token = tokenState?.token;
 
   return (
     <ConfigurationContext.Provider value={new ContextProviderValueModel(configurationState, setConfigurationState)}>

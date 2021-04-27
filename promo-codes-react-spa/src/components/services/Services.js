@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import searchServices from "../../common/logic/functions/searchServices";
-import activateBonus from '../../common/logic/functions/activateBonus'
+import { useContext, useEffect, useState } from "react";
+import searchServices from "../../services/searchServices";
+import activateBonus from '../../services/activateBonus'
 import ServiceModel from "../../common/models/ServiceModel";
-import useTokenContext from "../../common/hooks/contexts/useTokenContext";
-import getInputValue from "../../common/logic/functions/getInputValue";
-import getServices from "../../common/logic/functions/getServices";
-import useConfigurationContext from "../../common/hooks/contexts/useConfigurationContext";
+import getServices from "../../services/getServices";
+import { getInputValue } from "../../common/logic/formLogic";
+import useConfigurationContext from "../../hooks/contexts/useConfigurationContext";
+import useTokenContext from "../../hooks/contexts/useTokenContext";
 
 function Services(props) {
 
@@ -17,37 +17,39 @@ function Services(props) {
      * @type {[services: ServiceModel[], setServices: (_: ServiceModel) => undefined]}
      */
     const [services, setServices] = useState([]);
-
-    let tokenDetail = useTokenContext()?.state;
+    const { state: tokenDetailState, setState: _setTokenDetailState } = useTokenContext();
 
     //
 
     useEffect(() => {
         if (serviceNameSnippet) {
-            searchServices(
-                tokenDetail,
-                serviceNameSnippet,
-                pagination.page,
-                pagination.limit,
-                setServices,
-                (error) => {
-                    console.log(error);
-                    alert(error.message);
-                })
+            if (serviceNameSnippet.length >= 2) {
+                searchServices(
+                    tokenDetailState,
+                    serviceNameSnippet,
+                    pagination.page,
+                    pagination.limit,
+                    setServices,
+                    (error) => {
+                        console.log("Error at search services aaaaaa.")
+                        alert(error.message);
+                    });
+            }
         } else {
             getServices(
-                tokenDetail,
+                tokenDetailState,
                 pagination.page,
                 pagination.limit,
                 setServices,
                 (error) => {
-
+                    console.log("Error at get services oooo.")
+                    console.log(error);
                 })
         }
         return () => {
 
         }
-    }, [tokenDetail, serviceNameSnippet, pagination]);
+    }, [serviceNameSnippet, pagination]);
 
     //
 
@@ -55,7 +57,7 @@ function Services(props) {
         <div className="container">
             <div className="row">
                 <div className="col-12"><h1>Services</h1></div>
-                <div>Token: {tokenDetail.token}</div>
+                <div>Token: {tokenDetailState?.token}</div>
             </div>
             <div className="row">
                 <div className="col-12">
@@ -83,7 +85,7 @@ function Services(props) {
                             <form onSubmit={(e) => {
                                 e.preventDefault();
                                 activateBonus(
-                                    tokenDetail,
+                                    tokenDetailState,
                                     getInputValue(e.target, "promoCode"),
                                     getInputValue(e.target, "serviceId"),
                                     (serviceId) => {
@@ -91,7 +93,10 @@ function Services(props) {
                                         setServices(services);
                                         setForcedRenderToggle(!forcedRenderToggle);
                                     },
-                                    undefined);
+                                    (error) => {
+                                        console.log("Error at activate bonus eeeeeee.")
+                                        console.log(error);
+                                    });
                             }} className="container" key={item.id}>
                                 <div className="jumbotron row">
                                     <input type="hidden" name="serviceId" value={item.id} />
