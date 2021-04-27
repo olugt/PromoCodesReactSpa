@@ -1,6 +1,6 @@
 import TokenDetailModel from "../common/models/contexts/TokenDetailModel";
 import ServiceModel from '../common/models/ServiceModel'
-import ServicesService from '../infrastructure/promo-code/ServicesService'
+import PromoCodesWebApiServicesManager from '../infrastructure/promo-codes/PromoCodesWebApiServicesManager'
 import { handleError } from "../common/logic/errorLogic";
 import ErrorModel from "../common/models/ErrorModel";
 
@@ -11,7 +11,7 @@ import ErrorModel from "../common/models/ErrorModel";
  * @param {Number} limit Page items limit.
  * @param {TokenDetailModel} tokenDetail Identity token model.
  * @param {(_: ServiceModel[]) => undefined} setServicesState The setState callback function for refreshing the array of services expected. 
- * @param {(_: ErrorModel) => undefined} handErrorCallback Callback that needs error.
+ * @param {(_: ErrorModel) => undefined} handleErrorCallback Callback that needs error.
  */
 export default function searchServices(
     tokenDetail,
@@ -19,12 +19,12 @@ export default function searchServices(
     page,
     limit,
     setServicesState,
-    handErrorCallback) {
+    handleErrorCallback) {
 
-    new ServicesService(tokenDetail?.token).searchServices(serviceNameSnippet, page, limit)
+    new PromoCodesWebApiServicesManager(tokenDetail?.token).searchServices(serviceNameSnippet, page, limit)
         .then(value => {
             setServicesState([...value]);
         })
-        .catch(error => handleError(error, handErrorCallback));
+        .catch(error => handleError(error, handleErrorCallback));
 
 }
