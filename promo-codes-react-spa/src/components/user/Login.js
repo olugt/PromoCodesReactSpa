@@ -1,18 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom"
-import useNotificationContext from "../../common/hooks/contexts/useNotificationContext";
-import useTokenContext from "../../common/hooks/contexts/useTokenContext";
-import processLogin from '../../common/logic/functions/processLogin'
+import processLogin from '../../services/processLogin'
 import NotificationModel from "../../common/models/NotificationModel";
+import useNotificationContext from "../../hooks/contexts/useNotificationContext";
+import useTokenContext from "../../hooks/contexts/useTokenContext";
+import { LOCATION_PATHS } from "../../common/constants/LocationPathsConstants";
+import { doesUrlHaveRedirectUrl, getRedirectUrlFromUrl } from "../../common/logic/browserLogic";
 
 function Login(props) {
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
 
-    const navigateTo = useHistory().push;
+    const historyPush = useHistory().push;
 
     let setTokenContextState = useTokenContext().setState;
     let setNotificationContextState = useNotificationContext().setState;
+
+    //
+
+    useEffect(() => {
+        setTokenContextState(null)
+        return () => {
+
+        }
+    }, [])
 
     //
 
@@ -24,7 +35,9 @@ function Login(props) {
                     emailAddress,
                     password,
                     setTokenContextState,
-                    navigateTo,
+                    () => {
+                        historyPush(doesUrlHaveRedirectUrl(window.location.href) ? getRedirectUrlFromUrl(window.location.href) : LOCATION_PATHS.home);
+                    },
                     (error) => setNotificationContextState(new NotificationModel().setError(error)));
             }} className="container">
                 <div className="row">

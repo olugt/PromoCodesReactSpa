@@ -4,11 +4,12 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { LOCATION_PATHS as lp } from '../common/constants/LocationPathsConstants';
 import Services from '../components/services/Services';
 import Login from '../components/user/Login';
+import AuthorizedRoute from '../ingress/AuthorizedRoute';
 
 /**
  * The top level router set-up for rendering all components at top level routes.
- * @param {*} props 
- * @returns 
+ * @param {*} props
+ * @returns
  */
 function MainRouter(props) {
     return (
@@ -16,12 +17,15 @@ function MainRouter(props) {
             <Route exact path={lp.home}>
                 <Redirect to={lp.services} />
             </Route>
-            <Route exact path={lp.services}>
+            <AuthorizedRoute path={lp.services}>
                 <Services />
-            </Route>
+            </AuthorizedRoute>
             <Route exact path={lp.login}>
                 <Login />
             </Route>
+            {/* <Route exact path="*">
+                <Redirect to={lp.home} />
+            </Route> */}
         </Switch>
     )
 }
