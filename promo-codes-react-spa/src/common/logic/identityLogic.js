@@ -1,10 +1,10 @@
 import { LOCATION_PATHS } from "../constants/LocationPathsConstants";
 import { MAGIC_STRINGS } from "../constants/MagicStringsConstants";
-import TokenDetailModel from "../models/contexts/TokenDetailModel";
+import TokenDetailContextModel from "../models/contexts/TokenDetailContextModel";
 
 /**
  * Checks if the identity token model is valid, by simple checks on the client-side.
- * @param {TokenDetailModel} tokenDetail The identity token model.
+ * @param {TokenDetailContextModel} tokenDetail The identity token model.
  * @returns Where or not the identity token is valid.
  */
 function isTokenValid(tokenDetail) {

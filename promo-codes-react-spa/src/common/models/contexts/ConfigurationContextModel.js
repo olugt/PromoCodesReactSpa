@@ -1,7 +1,7 @@
 /**
  * Model for managing custom configurations, available to components.
  */
-export default class ConfigurationModel {
+export default class ConfigurationContextModel {
     constructor() {
         
     }

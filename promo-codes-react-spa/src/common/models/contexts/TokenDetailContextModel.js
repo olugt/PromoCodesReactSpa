@@ -1,6 +1,6 @@
 import ContextModelBase from "./ContextModelBase";
 
-export default class TokenDetailModel extends ContextModelBase {
+export default class TokenDetailContextModel extends ContextModelBase {
     /**
      * Identity token model.
      * @param {String} token Identity token string.

@@ -1,21 +1,16 @@
-import { useContext } from "react";
 import { ConfigurationContext } from "../../App";
-import ConfigurationModel from "../../common/models/ConfigurationModel";
-import ContextProviderValueModel from "../../common/models/ContextProviderValueModel";
+import ConfigurationContextModel from "../../common/models/contexts/ConfigurationContextModel";
+import { useProcessSimpleCustomContext } from "./customContextHooks";
 
+/**
+ * Hook used to manage the ConfigurationContext.
+ * @returns Object containing configuration model and a callback function to set it, as state and setState.
+ */
 export default function useConfigurationContext() {
-    let valueModel = new ContextProviderValueModel();
-    valueModel = useContext(ConfigurationContext);
-    let model = new ConfigurationModel();
-    model = valueModel.state;
 
-    /**
-     * Callback function used to set the configuration detail model in the context.
-     * @param {ConfigurationModel} _ The configuration detail model to be used to set in the context.
-     * @returns undefined.
-     */
-    let setState = (_) => undefined;
-    setState = valueModel.setState;
+    return useProcessSimpleCustomContext(
+        ConfigurationContext,
+        new ConfigurationContextModel()
+    )
 
-    return { state: model, setState }
 }

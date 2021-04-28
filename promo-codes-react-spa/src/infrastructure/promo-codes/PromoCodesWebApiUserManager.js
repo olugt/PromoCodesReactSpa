@@ -1,4 +1,4 @@
-import TokenDetailModel from "../../common/models/contexts/TokenDetailModel";
+import TokenDetailContextModel from "../../common/models/contexts/TokenDetailContextModel";
 import { JwtDetailResponseModel, LoginRequestModel } from "./dependencies/PromoCodesAspNetCoreWebApiClient";
 import PromoCodesWebApiManagerBase from "./PromoCodesWebApiManagerBase";
 
@@ -20,7 +20,7 @@ export default class PromoCodesWebApiUserManager extends PromoCodesWebApiManager
             requestModel.password = password;
 
             let responseModel = new JwtDetailResponseModel(await this.client.login(this.clientDefaultVersion, requestModel));
-            let tokenDetail = new TokenDetailModel(responseModel.jwtDetail.jwt, responseModel.jwtDetail.expiryDatetimeUtc);
+            let tokenDetail = new TokenDetailContextModel(responseModel.jwtDetail.jwt, responseModel.jwtDetail.expiryDatetimeUtc);
             return tokenDetail;
         }
         catch (error) {

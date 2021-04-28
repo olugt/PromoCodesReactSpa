@@ -1,26 +1,15 @@
-import { useContext } from "react";
 import { NotificationContext } from "../../App";
-import ContextProviderValueModel from "../../common/models/ContextProviderValueModel";
-import NotificationModel from "../../common/models/NotificationModel";
-
+import NotificationContextModel from "../../common/models/contexts/NotificationContextModel";
+import { useProcessSimpleCustomContext } from "./customContextHooks";
 
 /**
  * Hook used to manage the NotificationContext.
- * @returns Object containing notification model and a callback function to set it.
+ * @returns Object containing notification model and a callback function to set it, as state and setState.
  */
 export default function useNotificationContext() {
-    let valueModel = new ContextProviderValueModel();
-    valueModel = useContext(NotificationContext);
-    let model = new NotificationModel();
-    model = valueModel.state;
 
-    /**
-     * Callback function used to set the notification detail model in the context.
-     * @param {NotificationModel} _ The notification detail model to be used to set in the context.
-     * @returns undefined.
-     */
-    let setState = (_) => undefined;
-    setState = valueModel.setState;
-
-    return { state: model, setState }
+    return useProcessSimpleCustomContext(
+        NotificationContext,
+        new NotificationContextModel()
+    )
 }

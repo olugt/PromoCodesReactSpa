@@ -1,6 +1,6 @@
-import ErrorModel from "./ErrorModel";
+import ErrorModel from "../ErrorModel";
 
-export default class NotificationModel {
+export default class NotificationContextModel {
     /**
      * Instantiate with just notification message.
      * @param {String} message Notification message.
@@ -10,9 +10,9 @@ export default class NotificationModel {
     }
 
     /**
-     * Instantiate NotificationModel with error details.
+     * Instantiate NotificationContextModel with error details.
      * @param {ErrorModel} error Error model.
-     * @returns NotificationModel with error details.
+     * @returns NotificationContextModel with error details.
      */
     setError(error) {
         this.error = error;

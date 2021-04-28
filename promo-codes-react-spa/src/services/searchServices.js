@@ -1,4 +1,4 @@
-import TokenDetailModel from "../common/models/contexts/TokenDetailModel";
+import TokenDetailContextModel from "../common/models/contexts/TokenDetailContextModel";
 import ServiceModel from '../common/models/ServiceModel'
 import PromoCodesWebApiServicesManager from '../infrastructure/promo-codes/PromoCodesWebApiServicesManager'
 import { handleError } from "../common/logic/errorLogic";
@@ -9,7 +9,7 @@ import ErrorModel from "../common/models/ErrorModel";
  * @param {String} serviceNameSnippet Snippet of service name.
  * @param {Number} page Page number.
  * @param {Number} limit Page items limit.
- * @param {TokenDetailModel} tokenDetail Identity token model.
+ * @param {TokenDetailContextModel} tokenDetail Identity token model.
  * @param {(_: ServiceModel[]) => undefined} setServicesState The setState callback function for refreshing the array of services expected. 
  * @param {(_: ErrorModel) => undefined} handleErrorCallback Callback that needs error.
  */

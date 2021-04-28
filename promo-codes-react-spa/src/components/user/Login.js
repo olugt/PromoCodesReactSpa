@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom"
 import processLogin from '../../services/processLogin'
-import NotificationModel from "../../common/models/NotificationModel";
 import useNotificationContext from "../../hooks/contexts/useNotificationContext";
 import useTokenContext from "../../hooks/contexts/useTokenContext";
 import { LOCATION_PATHS } from "../../common/constants/LocationPathsConstants";
 import { doesUrlHaveRedirectUrl, getRedirectUrlFromUrl } from "../../common/logic/browserLogic";
+import NotificationContextModel from "../../common/models/contexts/NotificationContextModel";
 
 function Login(props) {
     const [emailAddress, setEmailAddress] = useState("");
@@ -38,7 +38,7 @@ function Login(props) {
                     () => {
                         historyPush(doesUrlHaveRedirectUrl(window.location.href) ? getRedirectUrlFromUrl(window.location.href) : LOCATION_PATHS.home);
                     },
-                    (error) => setNotificationContextState(new NotificationModel().setError(error)));
+                    (error) => setNotificationContextState(new NotificationContextModel().setError(error)));
             }} className="container">
                 <div className="row">
                     <div className="col-12 offset-md-5 col-md-7">

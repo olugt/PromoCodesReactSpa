@@ -1,11 +1,11 @@
 import PromoCodesWebApiServicesManager from '../infrastructure/promo-codes/PromoCodesWebApiServicesManager';
 import ErrorModel from '../common/models/ErrorModel';
-import TokenDetailModel from '../common/models/contexts/TokenDetailModel';
+import TokenDetailContextModel from '../common/models/contexts/TokenDetailContextModel';
 import { handleError } from '../common/logic/errorLogic';
 
 /**
  * Activate bonus for user.
- * @param {TokenDetailModel} tokenDetail Identity token model.
+ * @param {TokenDetailContextModel} tokenDetail Identity token model.
  * @param {String} promoCode Promo code.
  * @param {Number} serviceId ID of service.
  * @param {(_: Number) => undefined} callBackWithServiceId Call back with the service ID returned from the web API.

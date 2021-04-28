@@ -3,11 +3,11 @@ import './App.css';
 import MainRouter from './routers/MainRouter';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createContext, useEffect, useState } from 'react';
-import TokenDetailModel from './common/models/contexts/TokenDetailModel';
+import TokenDetailContextModel from './common/models/contexts/TokenDetailContextModel';
 import ContextProviderValueModel from './common/models/ContextProviderValueModel';
-import NotificationModel from './common/models/NotificationModel';
 import Notification from './components/shared/Notification';
-import ConfigurationModel from './common/models/ConfigurationModel';
+import ConfigurationContextModel from './common/models/contexts/ConfigurationContextModel';
+import NotificationContextModel from './common/models/contexts/NotificationContextModel';
 
 export const NotificationContext = createContext();
 export const TokenContext = createContext();
@@ -15,9 +15,9 @@ export const ConfigurationContext = createContext();
 
 function App() {
 
-  const [notificationState, setNotificationState] = useState(new NotificationModel());
-  const [tokenState, setTokenState] = useState(new TokenDetailModel());
-  const [configurationState, setConfigurationState] = useState(new ConfigurationModel());
+  const [notificationState, setNotificationState] = useState(new NotificationContextModel());
+  const [tokenState, setTokenState] = useState(new TokenDetailContextModel());
+  const [configurationState, setConfigurationState] = useState(new ConfigurationContextModel());
   let token = tokenState?.token;
 
   return (

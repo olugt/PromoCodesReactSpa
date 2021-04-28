@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import NotificationModel from '../../common/models/NotificationModel'
 import useTokenContext from '../../hooks/contexts/useTokenContext';
+import NotificationContextModel from '../../common/models/contexts/NotificationContextModel';
 
 /**
  * 
- * @param {{model: NotificationModel, children: Object}} param0 Bla
+ * @param {{model: NotificationContextModel, children: Object}} param0 Bla
  * @returns 
  */
 function Notification({ model, children }) {
@@ -31,7 +31,7 @@ function Notification({ model, children }) {
 }
 
 Notification.propTypes = {
-    model: PropTypes.instanceOf(NotificationModel)
+    model: PropTypes.instanceOf(NotificationContextModel)
 }
 
 export default Notification
