@@ -23,9 +23,9 @@ function MainRouter(props) {
             <Route exact path={lp.login}>
                 <Login />
             </Route>
-            {/* <Route exact path="*">
+            <Route exact path="*">
                 <Redirect to={lp.home} />
-            </Route> */}
+            </Route>
         </Switch>
     )
 }
