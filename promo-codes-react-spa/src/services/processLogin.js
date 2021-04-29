@@ -23,6 +23,6 @@ export default function processLogin(
             setTokenContextState(value);
             doRestOnSuccessfulLogin();
         })
-        .catch(error => handleError(error, handleErrorCallback));
+        .catch(error => handleErrorCallback(error));
 
 }

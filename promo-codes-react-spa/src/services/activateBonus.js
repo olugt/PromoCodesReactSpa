@@ -8,19 +8,19 @@ import { handleError } from '../common/logic/errorLogic';
  * @param {TokenDetailContextModel} tokenDetail Identity token model.
  * @param {String} promoCode Promo code.
  * @param {Number} serviceId ID of service.
- * @param {(_: Number) => undefined} callBackWithServiceId Call back with the service ID returned from the web API.
+ * @param {(_: Number) => undefined} onSuccessfulBonusActivationCallback Call back with the service ID returned from the web API, on successful bonus activation.
  * @param {(_: ErrorModel) => undefined} handleErrorCallback Callback that needs error.
  */
 export default function activateBonus(
     tokenDetail,
     promoCode,
     serviceId,
-    callBackWithServiceId,
+    onSuccessfulBonusActivationCallback,
     handleErrorCallback) {
 
     new PromoCodesWebApiServicesManager(tokenDetail.token).activateBonus(promoCode, serviceId)
         .then(value => {
-            callBackWithServiceId(value.id);
+            onSuccessfulBonusActivationCallback(value.id);
         })
         .catch(error => handleError(error, handleErrorCallback));
 
