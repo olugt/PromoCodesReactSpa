@@ -23,8 +23,8 @@ export default class ConfigurationContextModel extends ContextModelBase {
      * Check if mocking of promo codes infrastructure is enabled.
      * @returns {Boolean}
      */
-    shouldMockPromoCodesInfrastructure() {
-        const configValue = process.env.REACT_APP_SHOULD_MOCK_PROMO_CODES_INFRASTRUCTURE;
+    shouldFakePromoCodesInfrastructure() {
+        const configValue = process.env.REACT_APP_SHOULD_FAKE_PROMO_CODES_INFRASTRUCTURE;
         return convertFromBooleanString(configValue);
     }
 };
