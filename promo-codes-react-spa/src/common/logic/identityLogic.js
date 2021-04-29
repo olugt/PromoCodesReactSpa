@@ -19,7 +19,7 @@ function isTokenValid(tokenDetail) {
 function makeLoginUrlOnIdentityError(redirectUrlOnSuccessfulLogin) {
     const origin = window.location.origin;
     const absoluteLoginUrl = new URL(origin + LOCATION_PATHS.login);
-    if (redirectUrlOnSuccessfulLogin) {
+    if (redirectUrlOnSuccessfulLogin && (redirectUrlOnSuccessfulLogin !== LOCATION_PATHS.login)) {
         absoluteLoginUrl.searchParams.set(MAGIC_STRINGS.redirectUrlQueryParameter, encodeURIComponent(redirectUrlOnSuccessfulLogin));
     }
     return absoluteLoginUrl.href.replace(origin, "");
