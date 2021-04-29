@@ -7,11 +7,12 @@ import Login from '../components/user/Login';
 import AuthorizedRoute from '../ingress/AuthorizedRoute';
 
 /**
- * The top level router set-up for rendering all components at top level routes.
+ * The top level routes set-up for rendering all components at top level routes. This route must be in the layout or any component that is such that the routes are directly relative to the React BrowserRouter.
  * @param {*} props
  * @returns
  */
-function MainRouter(props) {
+function MainRoutes(props) {
+
     return (
         <Switch>
             <Route exact path={lp.home}>
@@ -28,11 +29,12 @@ function MainRouter(props) {
             </Route>
         </Switch>
     )
+
 }
 
 // MainRouting.propTypes = {
 
 // }
 
-export default MainRouter
+export default MainRoutes
 

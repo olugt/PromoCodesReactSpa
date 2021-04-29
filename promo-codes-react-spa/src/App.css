@@ -58,9 +58,9 @@
 
 .floating {
   position: fixed;
+  z-index: 10000000;
   top: 0;
   right: 0;
   height: inherit;
   width: 30em;
-  background-color: red;
 }
