@@ -68,8 +68,8 @@ function useProcessCustomContext(
 
 /**
  * 
- * @param {*} Context 
- * @param {*} newedContextModel 
+ * @param {React.Context<any>} Context React context to use, passed directly as exported from creation by React's createContext().
+ * @param {ContextModelBase} newedContextModel A new instance of the model of the context. It should be preferrably be passed like in "new Model()", because it is still overriden by the process, hence, no need to initialize its properties with any values.
  * @returns 
  */
 function useProcessSimpleCustomContext(

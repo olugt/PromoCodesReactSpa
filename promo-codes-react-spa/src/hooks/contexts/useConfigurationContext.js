@@ -8,9 +8,13 @@ import { useProcessSimpleCustomContext } from "./customContextHooks";
  */
 export default function useConfigurationContext() {
 
-    return useProcessSimpleCustomContext(
+    /**
+     * @type {{state: ConfigurationContextModel, setState: (_: ConfigurationContextModel) => undefined}}
+     */
+    let returnValue = useProcessSimpleCustomContext(
         ConfigurationContext,
         new ConfigurationContextModel()
-    )
+    );
+    return returnValue;
 
 }

@@ -12,7 +12,10 @@ import { useProcessCustomContext } from "./customContextHooks";
 export default function useTokenContext() {
     const identityCookieName = MAGIC_STRINGS.identityTokenCookieName;
 
-    return useProcessCustomContext(
+    /**
+     * @type {{state: TokenDetailContextModel, setState: (_: TokenDetailContextModel) => undefined}}
+     */
+     let returnValue = useProcessCustomContext(
         TokenContext,
         new TokenDetailContextModel(),
         (contextModel) => {
@@ -42,4 +45,5 @@ export default function useTokenContext() {
             return tokenDetail;
 
         });
+        return returnValue;
 }

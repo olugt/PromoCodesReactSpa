@@ -8,8 +8,12 @@ import { useProcessSimpleCustomContext } from "./customContextHooks";
  */
 export default function useNotificationContext() {
 
-    return useProcessSimpleCustomContext(
+    /**
+     * @type {{state: NotificationContextModel, setState: (_: NotificationContextModel) => undefined}}
+     */
+     let returnValue = useProcessSimpleCustomContext(
         NotificationContext,
         new NotificationContextModel()
-    )
+    );
+    return returnValue;
 }
