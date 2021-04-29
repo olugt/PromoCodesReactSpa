@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Redirect, Route } from 'react-router';
 import useTokenContext from '../hooks/contexts/useTokenContext';
 import { isTokenValid, makeLoginUrlOnIdentityError } from '../common/logic/identityLogic';
+import useConfigurationContext from '../hooks/contexts/useConfigurationContext';
 
 /**
  * A basic authorized Route. It should be used just like Route component, but where user actions and navigation need to be authorized.
@@ -10,9 +11,10 @@ import { isTokenValid, makeLoginUrlOnIdentityError } from '../common/logic/ident
  * @returns Redirection to login or allows pass through to destination.
  */
 function AuthorizedRoute({ path, children, ...rest }) {
-    const [isUserAuthenticated, _setIsUserAuthenticated] = useState(isTokenValid(useTokenContext().state));
 
-    return (isUserAuthenticated) ?
+    const { state: tokenContextState, setState: _setTokenContextState } = useTokenContext();
+
+    return (isTokenValid(tokenContextState)) ?
         (<Route exact path={path} {...rest}>{children}</Route>) :
         (<Redirect to={makeLoginUrlOnIdentityError(path)} />)
 }
