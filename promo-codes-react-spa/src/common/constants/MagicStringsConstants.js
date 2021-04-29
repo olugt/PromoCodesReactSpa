@@ -4,5 +4,6 @@
  */
 export const MAGIC_STRINGS = {
     redirectUrlQueryParameter: "redirect-url",
-    identityTokenCookieName: "identity-token"
+    identityTokenCookieName: "identity-token",
+    promoInputIdPrefix: "promo-input-"
 }
