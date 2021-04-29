@@ -7,7 +7,6 @@ export default class TokenDetailContextModel extends ContextModelBase {
      * @param {Date} expiryDatetimeUtc Date-time of expiry of token (also already embeded in the token).
      */
     constructor(token, expiryDatetimeUtc) {
-
         super(token, expiryDatetimeUtc);
 
         this.token = token;

@@ -1,11 +1,16 @@
 import ErrorModel from "../ErrorModel";
+import ContextModelBase from "./ContextModelBase";
 
-export default class NotificationContextModel {
+export default class NotificationContextModel extends ContextModelBase {
     /**
      * Instantiate with just notification message.
+     * @param {Boolean} show If should show notification.
      * @param {String} message Notification message.
      */
-    constructor(message) {
+    constructor(show, message) {
+        super(show, message);
+        
+        this.show = show;
         this.message = message;
     }
 
@@ -15,9 +20,8 @@ export default class NotificationContextModel {
      * @returns NotificationContextModel with error details.
      */
     setError(error) {
-        this.error = error;
         this.isError = true;
-        this.message = this.error.message;
+        this.error = error;
         return this;
     }
 };
