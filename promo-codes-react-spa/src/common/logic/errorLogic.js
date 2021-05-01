@@ -8,6 +8,8 @@ import { makeLoginUrlOnIdentityError } from "./identityLogic";
  * @param {(_: ErrorModel) => undefined} callback Callback that needs error data.
  */
 function handleError(error, callback) {
+    console.log(error);
+    
     if (error.code === ERROR_CODES.identityError) {
         const origin = window.location.origin;
         window.location.href = origin + makeLoginUrlOnIdentityError(window.location.href.replace(origin, ""));
