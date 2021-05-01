@@ -3,6 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import processLogin from './services/processLogin';
+import { effectCreateServer } from './infrastructure/promo-codes/dependencies-doubles/web-api-servers/PromoCodesAspNetCoreWebApiServer';
+import { convertFromBooleanString } from './common/logic/configurationLogic';
+import ConfigurationContextModel from './common/models/contexts/ConfigurationContextModel';
+
+// This block of code check if Mirage JS should be used to mock promo codes web API.
+if (new ConfigurationContextModel().shouldMockPromoCodesInfrastructure()) {
+  if (process.env.NODE_ENV === "development") {
+    effectCreateServer({ environment: "development" });
+  }
+}
 
 ReactDOM.render(
   <React.StrictMode>
