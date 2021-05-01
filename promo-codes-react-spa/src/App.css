@@ -1,43 +1,3 @@
-/* .App {
-  text-align: center;
-} */
-
-/* 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
 #header {
   background-color: white;
   height: 4em;
@@ -63,4 +23,46 @@
   right: 0;
   height: inherit;
   width: 30em;
+}
+
+#services-scroll-container {
+  height: 40em;
+  overflow-y: auto;
+}
+
+#services-loading-idicator {
+  margin-top: 2em;
+  height: 1em;
+}
+
+.scrolled-service .jumbotron {
+  padding: 1em 3em 1em 3em;
+  min-height: 13em;
+  max-height: 15em;
+}
+
+@media (min-width: 768px) {
+  .scrolled-service .jumbotron {
+    padding: 1em 3em 1em 3em;
+    min-height: 5em;
+    max-height: 7em;
+  }
+}
+
+.promo-code-container {
+  position: relative;
+}
+
+.promo-code-input {
+  padding-right: 2em !important;
+}
+
+.promo-code-copy-button {
+  position: absolute;
+  top: 0;
+  right: 1em;
+  width: 2em;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  background-color: transparent !important;
+  border-color: transparent !important;
 }
