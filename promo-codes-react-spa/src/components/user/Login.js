@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import processLogin from '../../services/processLogin'
 import useNotificationContext from "../../hooks/contexts/useNotificationContext";
 import useTokenContext from "../../hooks/contexts/useTokenContext";
 import { LOCATION_PATHS } from "../../common/constants/LocationPathsConstants";
 import { doesUrlHaveRedirectUrl, getRedirectUrlFromUrl } from "../../common/logic/browserLogic";
 import NotificationContextModel from "../../common/models/contexts/NotificationContextModel";
-import useConfigurationContext from "../../hooks/contexts/useConfigurationContext";
-import TokenDetailContextModel from "../../common/models/contexts/TokenDetailContextModel";
-import ErrorModel from "../../common/models/ErrorModel";
-import { ERROR_CODES } from "../../common/constants/ErrorCodesConstants";
-import { addToDate } from "../../common/logic/dateLogic";
 
 function Login(props) {
 

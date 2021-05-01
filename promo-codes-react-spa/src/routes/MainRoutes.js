@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { LOCATION_PATHS as lp } from '../common/constants/LocationPathsConstants';
 import Services from '../components/services/Services';
 import Login from '../components/user/Login';
-import AuthorizedRoute from '../ingress/AuthorizedRoute';
+import AuthorizedRoute from './AuthorizedRoute';
 
 /**
  * The top level routes set-up for rendering all components at top level routes. This route must be in the layout or any component that is such that the routes are directly relative to the React BrowserRouter.
