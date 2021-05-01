@@ -7,20 +7,22 @@ import { handleError } from "../common/logic/errorLogic";
 /**
  * Get all services, but paged.
  * @param {TokenDetailContextModel} tokenDetail Identity toke details.
- * @param {(_: ServiceModel[])} setServicesState Callback to set list of services.
- * @param {(_: ErrorModel)} handleErrorCallback Call back to use error.
+ * @param {Number} page Page number.
+ * @param {Number} limit Page items limit.
+ * @param {(_: ServiceModel[]) => {}} handleValue Callback to process services received.
+ * @param {(_: ErrorModel) => {}} handleErrorCallback Call back to use error.
  */
 export default function getServices(
     tokenDetail,
     page,
     limit,
-    setServicesState,
+    handleValue,
     handleErrorCallback
 ) {
 
     new PromoCodesWebApiServicesManager(tokenDetail?.token).getServices(page, limit)
         .then(value => {
-            setServicesState([...value]);
+            handleValue(value);
         })
         .catch(error => handleError(error, handleErrorCallback));
 
