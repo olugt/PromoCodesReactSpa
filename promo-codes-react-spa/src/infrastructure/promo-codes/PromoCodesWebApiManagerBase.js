@@ -1,4 +1,5 @@
 import { ERROR_CODES } from "../../common/constants/ErrorCodesConstants";
+import ConfigurationContextModel from "../../common/models/contexts/ConfigurationContextModel";
 import ErrorModel from "../../common/models/ErrorModel";
 import { ApiException, ObjectErrorResponseModel, PromoCodesAspNetCoreWebApiClient, ValidationErrorResponseModel } from "./dependencies/PromoCodesAspNetCoreWebApiClient";
 
@@ -8,12 +9,12 @@ export default class PromoCodesWebApiManagerBase {
      * @param {String} token The identity token, to be passed by derived classes that have it.
      */
     constructor(token) {
-        this.client = new PromoCodesAspNetCoreWebApiClient(process.env.REACT_APP_PROMO_CODES_WEB_API_BASE_URL);
+        this.client = new PromoCodesAspNetCoreWebApiClient(new ConfigurationContextModel().getPromoCodesWebApiBaseUrl());
         if (token) {
             this.client.setToken(token);
         }
 
-        this.clientDefaultVersion = process.env.REACT_APP_PROMO_CODES_WEB_API_DEFAULT_VERSION;
+        this.clientDefaultVersion = new ConfigurationContextModel().getPromoCodesWebApiDefaultVersion();
     }
 
     /**

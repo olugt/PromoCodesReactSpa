@@ -174,12 +174,12 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200) {
+        if (status === 201) {
             return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = ServiceResponseModel.fromJS(resultData200);
-                return result200;
+                let result201 = null;
+                let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = ServiceResponseModel.fromJS(resultData201);
+                return result201;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -224,12 +224,12 @@ export class PromoCodesAspNetCoreWebApiClient extends PromoCodesAspNetCoreWebApi
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200) {
+        if (status === 201) {
             return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = JwtDetailResponseModel.fromJS(resultData200);
-                return result200;
+                let result201 = null;
+                let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = JwtDetailResponseModel.fromJS(resultData201);
+                return result201;
             });
         }
         else if (status === 500) {
