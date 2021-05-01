@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "emailAddress": "user1@example.com",
+      "password": "password123.ABC"
+    },
+    {
+      "emailAddress": "user2@example.com",
+      "password": "password456.DEF"
+    },
+    {
+      "emailAddress": "user3@example.com",
+      "password": "password789.GHI"
+    }
+  ]
+}

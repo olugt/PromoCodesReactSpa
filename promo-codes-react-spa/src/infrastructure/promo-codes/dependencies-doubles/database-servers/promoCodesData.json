@@ -1,0 +1,22 @@
+{
+    "promoCodes": [
+        {
+            "name": "promo-code-1"
+        },
+        {
+            "name": "promo-code-2"
+        },
+        {
+            "name": "promo-code-3"
+        },
+        {
+            "name": "promo-code-4"
+        },
+        {
+            "name": "promo-code-5"
+        },
+        {
+            "name": "promo-code-6"
+        }
+    ]
+}
