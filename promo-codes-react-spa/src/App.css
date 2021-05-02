@@ -25,9 +25,13 @@
   width: 30em;
 }
 
-#services-scroll-container {
-  height: 40em;
+#services-scroll-container-parent {
+  height: 100vh;
   overflow-y: auto;
+}
+
+#services-scroll-container {
+  min-height: 100%;
 }
 
 #services-loading-idicator {
