@@ -1,4 +1,5 @@
 import { ERROR_CODES } from "../../constants/ErrorCodesConstants";
+import { MAGIC_STRINGS } from "../../constants/MagicStringsConstants";
 import { convertFromBooleanString } from "../../logic/configurationLogic";
 import ErrorModel from "../ErrorModel";
 import ContextModelBase from "./ContextModelBase";
@@ -13,7 +14,7 @@ export default class ConfigurationContextModel extends ContextModelBase {
 
     /**
      * Get the default page items limit.
-     * @returns {String}
+     * @returns {Number}
      */
     getDefaultPageItemsLimitFactor() {
         return process.env.REACT_APP_DEFAULT_PAGE_ITEMS_LIMIT_FACTOR;
@@ -32,8 +33,12 @@ export default class ConfigurationContextModel extends ContextModelBase {
      * @returns 
      */
     shouldMockPromoCodesInfrastructure() {
-        const configValue = process.env.REACT_APP_SHOULD_MOCK_PROMO_CODES_INFRASTRUCTURE;
-        return convertFromBooleanString(configValue);
+        if (process.env.NODE_ENV === MAGIC_STRINGS.developmentEnvironment) {
+            const configValue = process.env.REACT_APP_SHOULD_MOCK_PROMO_CODES_INFRASTRUCTURE;
+            return convertFromBooleanString(configValue);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -57,6 +62,10 @@ export default class ConfigurationContextModel extends ContextModelBase {
      * @returns {Number} Fake JWT expiration duration in minutes.
      */
     getFakeJwtExpirationDurationMinutes() {
-        return Number.parseInt(process.env.REACT_APP_FAKE_JWT_EXPIRATION_DURATION_MINUTES);
+        if (process.env.NODE_ENV === MAGIC_STRINGS.developmentEnvironment) {
+            return Number.parseInt(process.env.REACT_APP_FAKE_JWT_EXPIRATION_DURATION_MINUTES);
+        } else {
+            throw new ErrorModel("Fake JWT only applicable to development.", null, ERROR_CODES.invalidConfigurationError);
+        }
     }
 };

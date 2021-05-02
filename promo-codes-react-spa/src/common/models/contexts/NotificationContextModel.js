@@ -9,7 +9,7 @@ export default class NotificationContextModel extends ContextModelBase {
      */
     constructor(show, message) {
         super(show, message);
-        
+
         this.show = show;
         this.message = message;
     }
@@ -20,6 +20,8 @@ export default class NotificationContextModel extends ContextModelBase {
      * @returns NotificationContextModel with error details.
      */
     setError(error) {
+        console.log(error);
+
         this.isError = true;
         this.error = error;
         return this;
