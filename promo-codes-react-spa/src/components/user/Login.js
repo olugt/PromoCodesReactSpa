@@ -52,14 +52,14 @@ function Login(props) {
                             <div className="row">
                                 <div className="form-group col-12">
                                     <label title="Enter email address below." htmlFor="email-address" className="col-12">{emailAddress ? "Email address" : "..."}</label>
-                                    <input id="email-address" type="email" value={emailAddress} onChange={e => setEmailAddress(e.target.value)} placeholder="Enter email address." className="form-control col-12 col-md-8" />
+                                    <input required id="email-address" type="email" value={emailAddress} onChange={e => setEmailAddress(e.target.value)} placeholder="Enter email address." className="form-control col-12 col-md-8" />
                                     <span id="email-address-validation-message" className="text-danger small"></span>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="form-group col-12">
                                     <label title="Enter password below." htmlFor="Password" className="col-12">{password ? "Password" : "..."}</label>
-                                    <input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password." className="form-control col-12 col-md-8" />
+                                    <input required id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password." className="form-control col-12 col-md-8" />
                                     <span id="password-validation-message" className="text-danger small"></span>
                                 </div>
                             </div>
