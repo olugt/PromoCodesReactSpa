@@ -1,13 +1,16 @@
 import { createServer, Response } from 'miragejs'
+import { ERROR_CODES } from '../../../../common/constants/ErrorCodesConstants';
+import { MAGIC_STRINGS } from '../../../../common/constants/MagicStringsConstants';
 import { skip, take } from '../../../../common/logic/dataLogic';
-import { addDaysToDate, addMinutesToDate } from '../../../../common/logic/dateLogic';
+import { addMinutesToDate } from '../../../../common/logic/dateLogic';
 import ConfigurationContextModel from '../../../../common/models/contexts/ConfigurationContextModel';
-import { ActivateBonusRequestModel, ApiException, JwtDetail, JwtDetailResponseModel, LoginRequestModel, ServiceResponseModel } from '../../dependencies/PromoCodesAspNetCoreWebApiClient';
+import ErrorModel from '../../../../common/models/ErrorModel';
+import { ActivateBonusRequestModel, ApiException, JwtDetail, JwtDetailResponseModel, LoginRequestModel, ObjectErrorResponseModel, ServiceResponseModel } from '../../dependencies/PromoCodesAspNetCoreWebApiClient';
 import * as promoCodesData from '../database-servers/promoCodesData.json'
 import * as servicesData from '../database-servers/servicesData.json'
 import * as usersData from '../database-servers/usersData.json'
 
-function effectCreateServer({ environment = "development" } = {}) {
+function effectCreateServer({ environment = MAGIC_STRINGS.developmentEnvironment } = {}) {
     return createServer({
         environment,
         urlPrefix: new ConfigurationContextModel().getPromoCodesWebApiBaseUrl(),
@@ -27,7 +30,7 @@ function effectCreateServer({ environment = "development" } = {}) {
                 let predicate = (value, index, array) => String(value.name).includes(nameSnippet);
 
                 if (!servicesData.services.some(predicate)) {
-                    throw new ApiException("Service not found.", 404, null, null, null);
+                    return new Response(404, {}, new ObjectErrorResponseModel({ message: "Service not found." }));
                 }
 
                 return new Response(200, {}, take(skip(servicesData.services.filter(predicate), page, limit), limit));
@@ -40,7 +43,7 @@ function effectCreateServer({ environment = "development" } = {}) {
                 let collection = take(skip(servicesData.services, page, limit), limit);
 
                 if (collection.length === 0) {
-                    throw new ApiException("No services available", 404, null, null, null);
+                    return new Response(404, {}, new ObjectErrorResponseModel({ message: "No services available." }));
                 }
 
                 return new Response(200, {}, collection);
@@ -54,7 +57,7 @@ function effectCreateServer({ environment = "development" } = {}) {
                 let requestModel = new ActivateBonusRequestModel(JSON.parse(request.requestBody));
 
                 if (!promoCodesData.promoCodes.some((value, index, array) => value.name === requestModel.promoCode)) {
-                    throw new ApiException("Promo code invalid.", 404, null, null, null);
+                    return new Response(404, {}, new ObjectErrorResponseModel({ message: "Promo code invalid." }));
                 }
 
                 /**
@@ -64,10 +67,9 @@ function effectCreateServer({ environment = "development" } = {}) {
                  * @param {ServiceResponseModel[]} array 
                  * @returns 
                  */
-                let predicate = (value, index, array) => value.id === requestModel.serviceId;
-
+                let predicate = (value, index, array) => value.id === Number.parseInt(requestModel.serviceId);
                 if (!servicesData.services.some(predicate)) {
-                    throw new ApiException("Service not found.", 404, null, null, null);
+                    return new Response(404, {}, new ObjectErrorResponseModel({ message: "Service not found." }));
                 }
 
                 // Assume bonus activated.
@@ -85,7 +87,7 @@ function effectCreateServer({ environment = "development" } = {}) {
                 if (!usersData.users.some((value, index, array) =>
                     value.emailAddress === requestModel.emailAddress
                     && value.password === requestModel.password)) {
-                    throw new ApiException("Invalid credentials.", 401, null, null, null);
+                    return new Response(401, {}, new ObjectErrorResponseModel({ message: "Invalid credentials." }));
                 }
 
                 /**

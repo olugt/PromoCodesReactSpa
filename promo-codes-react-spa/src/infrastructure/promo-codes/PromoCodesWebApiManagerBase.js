@@ -22,7 +22,7 @@ export default class PromoCodesWebApiManagerBase {
      * @param {*} error Any exception or error to be transformed to ErrorModel.
      * @returns ErrorModel transformed from error.
      */
-    static TransformError(error) {
+    static TransformError(error) {       
         let errorModel = new ErrorModel();
 
         if (error instanceof ApiException) {
