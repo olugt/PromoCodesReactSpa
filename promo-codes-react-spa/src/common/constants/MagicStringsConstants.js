@@ -3,7 +3,9 @@
  * This helps to avoid hard-coding magic strings.
  */
 export const MAGIC_STRINGS = {
+    developmentEnvironment: "development",
+    productionEnvironment: "production",
     redirectUrlQueryParameter: "redirect-url",
     identityTokenCookieName: "identity-token",
-    promoInputIdPrefix: "promo-input-"
+    promoCodeInputIdPrefix: "promo-code-input-"
 }
