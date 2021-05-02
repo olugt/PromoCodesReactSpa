@@ -22,8 +22,8 @@ function usePreliminaryInitializeContextModel(Context, newedContextModel) {
  * @param {ContextModelBase} state Value should be an instance of a class that inherits/implements from ContextModelBase, i.e a model that can be used as context state.
  */
 function shouldAssignStateFromBackingStore(contextProviderValueModel, state) {
-    return (contextProviderValueModel?.isConstructedExplicitly === true
-        && state?.atBaseSaysChildConstructedWithoutParameters === true);
+    return (contextProviderValueModel?.wasConstructedWithParameters === true
+        && state?.wasConstructedWithoutParameters === true);
 }
 
 /**
