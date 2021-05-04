@@ -27,9 +27,9 @@ function effectCreateServer({ environment = MAGIC_STRINGS.developmentEnvironment
                  * @param {ServiceResponseModel[]} array 
                  * @returns 
                  */
-                let predicate = (value, index, array) => String(value.name).includes(nameSnippet);
+                let predicate = (value, index, array) => String(value.name).toLowerCase().includes(nameSnippet.toLowerCase());
 
-                if (!servicesData.services.some(predicate)) {
+                if (take(skip(servicesData.services.filter(predicate), page, limit), limit).length === 0) {
                     return new Response(404, {}, new ObjectErrorResponseModel({ message: "Service not found." }));
                 }
 
