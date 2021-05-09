@@ -2,7 +2,7 @@ import { createServer, Response } from 'miragejs'
 import { ERROR_CODES } from '../../../../common/constants/ErrorCodesConstants';
 import { MAGIC_STRINGS } from '../../../../common/constants/MagicStringsConstants';
 import { skip, take } from '../../../../common/logic/dataLogic';
-import { addMinutesToDate } from '../../../../common/logic/dateLogic';
+import { addMinutesToDate } from '../../../../common/logic/dateTimeLogic';
 import ConfigurationContextModel from '../../../../common/models/contexts/ConfigurationContextModel';
 import ErrorModel from '../../../../common/models/ErrorModel';
 import { ActivateBonusRequestModel, ApiException, JwtDetail, JwtDetailResponseModel, LoginRequestModel, ObjectErrorResponseModel, ServiceResponseModel } from '../../dependencies/PromoCodesAspNetCoreWebApiClient';
