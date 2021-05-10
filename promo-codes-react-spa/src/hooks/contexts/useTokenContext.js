@@ -15,14 +15,19 @@ export default function useTokenContext() {
     /**
      * @type {{state: TokenDetailContextModel, setState: (_: TokenDetailContextModel) => undefined}}
      */
-     let returnValue = useProcessCustomContext(
+    let returnValue = useProcessCustomContext(
         TokenContext,
         new TokenDetailContextModel(),
+        /**
+         * 
+         * @param {TokenDetailContextModel} contextModel 
+         * @returns {TokenDetailContextModel}
+         */
         (contextModel) => {
 
             try {
                 const tokenCookie = getCookie(identityCookieName);
-                contextModel = JSON.parse(tokenCookie); // This may throw error if the cookie had been saved as undefined, etc. that are not valid JSON.
+                contextModel.fromParsedJson(JSON.parse(tokenCookie)); // JSON.parse function may throw error if the cookie had been saved as undefined, etc. that are not valid JSON.
             } catch {
                 contextModel = null;
             }
@@ -45,5 +50,5 @@ export default function useTokenContext() {
             return tokenDetail;
 
         });
-        return returnValue;
+    return returnValue;
 }

@@ -8,7 +8,7 @@ import TokenDetailContextModel from "../models/contexts/TokenDetailContextModel"
  * @returns Where or not the identity token is valid.
  */
 function isTokenValid(tokenDetail) {
-    return (tokenDetail && tokenDetail.token && tokenDetail.expiryDatetimeUtc) ? true : false;
+    return (tokenDetail && tokenDetail.token && tokenDetail.expiryDatetimeUtc && (tokenDetail.expiryDatetimeUtc > new Date())) ? true : false;
 }
 
 /**
