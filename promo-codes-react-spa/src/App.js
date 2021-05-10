@@ -13,14 +13,14 @@ export const ConfigurationContext = createContext();
 
 function App() {
 
-  const [notificationState, setNotificationState] = useState(new NotificationContextModel());
-  const [tokenState, setTokenState] = useState(new TokenDetailContextModel());
-  const [configurationState, setConfigurationState] = useState(new ConfigurationContextModel());
+  const [configurationContextState, setConfigurationContextState] = useState(new ConfigurationContextModel());
+  const [notificationContextState, setNotificationContextState] = useState(new NotificationContextModel());
+  const [tokenContextState, setTokenContextState] = useState(new TokenDetailContextModel());
 
   return (
-    <ConfigurationContext.Provider value={new ContextProviderValueModel(configurationState, setConfigurationState)}>
-      <NotificationContext.Provider value={new ContextProviderValueModel(notificationState, setNotificationState)}>
-        <TokenContext.Provider value={new ContextProviderValueModel(tokenState, setTokenState)}>
+    <ConfigurationContext.Provider value={new ContextProviderValueModel(configurationContextState, setConfigurationContextState)}>
+      <NotificationContext.Provider value={new ContextProviderValueModel(notificationContextState, setNotificationContextState)}>
+        <TokenContext.Provider value={new ContextProviderValueModel(tokenContextState, setTokenContextState)}>
 
           <Layout />
 
