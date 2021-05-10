@@ -4,10 +4,10 @@ import { MAGIC_STRINGS } from "../constants/MagicStringsConstants";
  * Set item into browser/document cookie.
  * @param {String} name Name of cookie. Must be unique.
  * @param {String} value Value of cookie. Can only be in string form.
- * @param {Date} expiryDatetimeUtc Date-time of expiry of the cookie.
+ * @param {Date} expiryDatetime Date-time of expiry of the cookie.
  */
-function setCookie(name, value, expiryDatetimeUtc) {
-    document.cookie = `${name}=${value};expires=${expiryDatetimeUtc.toUTCString()};path=/`;
+function setCookie(name, value, expiryDatetime) {
+    document.cookie = `${name}=${value};expires=${expiryDatetime.toUTCString()};path=/`;
 }
 
 /**

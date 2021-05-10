@@ -20,19 +20,19 @@ export default function useTokenContext() {
         new TokenDetailContextModel(),
         /**
          * 
-         * @param {TokenDetailContextModel} contextModel 
+         * @param {TokenDetailContextModel} tokenDetailContextModel 
          * @returns {TokenDetailContextModel}
          */
-        (contextModel) => {
+        (tokenDetailContextModel) => {
 
             try {
                 const tokenCookie = getCookie(identityCookieName);
-                contextModel.fromParsedJson(JSON.parse(tokenCookie)); // JSON.parse function may throw error if the cookie had been saved as undefined, etc. that are not valid JSON.
+                tokenDetailContextModel.fromParsedJson(JSON.parse(tokenCookie)); // JSON.parse function may throw error if the cookie had been saved as undefined, etc. that are not valid JSON.
             } catch {
-                contextModel = null;
+                tokenDetailContextModel = null;
             }
 
-            return contextModel;
+            return tokenDetailContextModel;
 
         },
         () => {
@@ -40,14 +40,19 @@ export default function useTokenContext() {
             return checkCookieExists(identityCookieName);
 
         },
-        (tokenDetail) => {
+        /**
+         * 
+         * @param {TokenDetailContextModel} tokenDetailContextModel 
+         * @returns {TokenDetailContextModel}
+         */
+        (tokenDetailContextModel) => {
 
-            if (isTokenValid(tokenDetail)) {
-                setCookie(identityCookieName, JSON.stringify(tokenDetail), tokenDetail.expiryDatetimeUtc);
+            if (isTokenValid(tokenDetailContextModel)) {
+                setCookie(identityCookieName, JSON.stringify(tokenDetailContextModel), tokenDetailContextModel.expiryDatetime);
             } else {
                 unSetCookie(identityCookieName);
             }
-            return tokenDetail;
+            return tokenDetailContextModel;
 
         });
     return returnValue;

@@ -4,13 +4,13 @@ export default class TokenDetailContextModel extends ContextModelBase {
     /**
      * Identity token model. Whenever a change is made to the parameters or properties of this class, update the fromParsedJson function.
      * @param {String} token Identity token string.
-     * @param {Date} expiryDatetimeUtc Date-time of expiry of token (also already embeded in the token).
+     * @param {Date} expiryDatetime Date-time of expiry of token (also already embeded in the token).
      */
-    constructor(token, expiryDatetimeUtc) {
-        super(token, expiryDatetimeUtc);
+    constructor(token, expiryDatetime) {
+        super(token, expiryDatetime);
 
         this.token = token;
-        this.expiryDatetimeUtc = expiryDatetimeUtc;
+        this.expiryDatetime = expiryDatetime;
     }
 
     /**
@@ -20,7 +20,7 @@ export default class TokenDetailContextModel extends ContextModelBase {
     fromParsedJson(parsedJson) {
         if (parsedJson) {
             this.token = parsedJson["token"];
-            this.expiryDatetimeUtc = parsedJson["expiryDatetimeUtc"] ? new Date(parsedJson["expiryDatetimeUtc"].toString()) : undefined;
+            this.expiryDatetime = parsedJson["expiryDatetime"] ? new Date(parsedJson["expiryDatetime"].toString()) : undefined;
         }
     }
 };

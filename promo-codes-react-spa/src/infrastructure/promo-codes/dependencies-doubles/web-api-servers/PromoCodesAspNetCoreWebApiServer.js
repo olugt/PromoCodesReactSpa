@@ -95,6 +95,7 @@ function effectCreateServer({ environment = MAGIC_STRINGS.developmentEnvironment
                  */
                 let jwtDetail = new JwtDetail();
                 jwtDetail.jwt = "Some fake JWT";
+                // Note that this assignment is in local date-time, because the real date-time also is converted to local date-time.
                 jwtDetail.expiryDatetimeUtc = addMinutesToDate(new Date(), new ConfigurationContextModel().getFakeJwtExpirationDurationMinutes());
                 let responseModel = new JwtDetailResponseModel();
                 responseModel.jwtDetail = jwtDetail;

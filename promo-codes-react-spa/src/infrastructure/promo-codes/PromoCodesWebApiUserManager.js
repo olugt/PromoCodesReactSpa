@@ -20,7 +20,7 @@ export default class PromoCodesWebApiUserManager extends PromoCodesWebApiManager
             requestModel.password = password;
 
             let responseModel = new JwtDetailResponseModel(await this.client.login(this.clientDefaultVersion, requestModel));
-            let tokenDetail = new TokenDetailContextModel(responseModel.jwtDetail.jwt, responseModel.jwtDetail.expiryDatetimeUtc);
+            let tokenDetail = new TokenDetailContextModel(responseModel.jwtDetail.jwt, responseModel.jwtDetail.expiryDatetimeUtc/* Note that this has been converted to local date-time.*/);
             return tokenDetail;
         }
         catch (error) {
